@@ -1049,10 +1049,11 @@ package or when debugging this package.\
 # directory structure (--prefix, --libdir etc) and compiler flags
 # such as CFLAGS.
 #
-%_configure ./configure
-%configure \
+%_configure /configure
+%configure(p:) \
   %{set_build_flags}; \
-  %{_configure} --host=%{_host} --build=%{_build} \\\
+  %{?-p:%{-p*}}%{!?-p:.}%{_configure} \\\
+	--host=%{_host} --build=%{_build} \\\
 	--program-prefix=%{?_program_prefix} \\\
 	--disable-dependency-tracking \\\
 	--prefix=%{_prefix} \\\
